@@ -24,6 +24,7 @@
 		7DFB06AF29A28F7A005AEEE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7DFB06B229A28F7A005AEEE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7DFB06B429A28F7A005AEEE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7DFB06BA29A28F93005AEEE2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +64,7 @@
 				7DFB06AF29A28F7A005AEEE2 /* Assets.xcassets */,
 				7DFB06B129A28F7A005AEEE2 /* LaunchScreen.storyboard */,
 				7DFB06B429A28F7A005AEEE2 /* Info.plist */,
+				7DFB06BA29A28F93005AEEE2 /* README.md */,
 			);
 			path = ToDoList;
 			sourceTree = "<group>";
