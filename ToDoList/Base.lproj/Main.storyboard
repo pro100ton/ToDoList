@@ -36,7 +36,7 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="ZKi-0F-156"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="muD-3J-1ae">
                             <connections>
-                                <segue destination="gWU-bZ-Qjl" kind="presentation" id="3Ge-ru-gHU"/>
+                                <segue destination="gWU-bZ-Qjl" kind="presentation" id="Cgu-wE-s58"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -48,7 +48,7 @@
         <!--New ToDo-->
         <scene sceneID="LVA-nT-lN8">
             <objects>
-                <tableViewController id="bgg-aS-Ez2" sceneMemberID="viewController">
+                <tableViewController id="bgg-aS-Ez2" customClass="ToDoDetailTableViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="PBt-py-1b9">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -56,31 +56,38 @@
                             <tableViewSection headerTitle="Basic information" id="ESG-93-ePL">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="RWK-iX-9z0">
-                                        <rect key="frame" x="20" y="55.333332061767578" width="353" height="54"/>
+                                        <rect key="frame" x="20" y="55.333332061767578" width="353" height="47.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RWK-iX-9z0" id="jUA-0b-nPx">
-                                            <rect key="frame" x="0.0" y="0.0" width="353" height="54"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="47.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Gwx-AH-DUo">
-                                                    <rect key="frame" x="10" y="10" width="333" height="34"/>
+                                                    <rect key="frame" x="10" y="9.9999999999999982" width="333" height="27.333333333333329"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J94-CW-8g7">
-                                                            <rect key="frame" x="0.0" y="0.0" width="28" height="34"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="28" height="27.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" title="" image="circle" catalog="system">
                                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
                                                             </state>
                                                             <state key="selected">
-                                                                <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="large"/>
+                                                                <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
                                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="isCompleteButtonTapped:" destination="bgg-aS-Ez2" eventType="touchUpInside" id="h1t-Hb-zEr"/>
+                                                            </connections>
                                                         </button>
-                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Remind me to..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rsa-YL-ysh">
-                                                            <rect key="frame" x="33" y="0.0" width="300" height="34"/>
+                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Remind me to..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rsa-YL-ysh">
+                                                            <rect key="frame" x="33" y="0.0" width="300" height="27.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits"/>
+                                                            <connections>
+                                                                <action selector="returnButtonPressed:" destination="bgg-aS-Ez2" eventType="primaryActionTriggered" id="fna-IE-2ws"/>
+                                                                <action selector="titleTextChanged:" destination="bgg-aS-Ez2" eventType="editingChanged" id="b5Q-tl-KrO"/>
+                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
@@ -98,14 +105,14 @@
                             <tableViewSection headerTitle="Due to" id="wnu-NY-AfE">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="ePs-Vh-2Mx" detailTextLabel="IXZ-Mv-TKY" style="IBUITableViewCellStyleValue1" id="rLz-Ub-ugs">
-                                        <rect key="frame" x="20" y="165.33333015441895" width="353" height="44"/>
+                                        <rect key="frame" x="20" y="158.66666221618652" width="353" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rLz-Ub-ugs" id="pHk-Ie-xx2">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ePs-Vh-2Mx">
-                                                    <rect key="frame" x="20" y="11.999999999999998" width="33" height="20.333333333333332"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Due date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ePs-Vh-2Mx">
+                                                    <rect key="frame" x="20" y="11.999999999999998" width="69" height="20.333333333333332"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -122,7 +129,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="V2X-yo-Rf5">
-                                        <rect key="frame" x="20" y="209.33333015441895" width="353" height="236"/>
+                                        <rect key="frame" x="20" y="202.66666221618652" width="353" height="236"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="V2X-yo-Rf5" id="9bt-f6-0Gt">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="236"/>
@@ -130,6 +137,9 @@
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="qkc-I4-aEW">
                                                     <rect key="frame" x="10" y="10" width="333" height="216"/>
+                                                    <connections>
+                                                        <action selector="datePickerChanged:" destination="bgg-aS-Ez2" eventType="primaryActionTriggered" id="Qec-HI-WaA"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
@@ -145,7 +155,7 @@
                             <tableViewSection headerTitle="Notes" id="0Du-Hk-Nte">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="200" id="AB0-DX-gTY">
-                                        <rect key="frame" x="20" y="501.33333015441895" width="353" height="200"/>
+                                        <rect key="frame" x="20" y="494.66666221618652" width="353" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AB0-DX-gTY" id="g5m-gH-gST">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="200"/>
@@ -153,7 +163,6 @@
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Add some optional notes here..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iOA-a0-qxz">
                                                     <rect key="frame" x="20" y="11" width="313" height="178"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <color key="textColor" systemColor="labelColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -178,15 +187,23 @@
                     <navigationItem key="navigationItem" title="New ToDo" largeTitleDisplayMode="never" id="ofh-5F-zix">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="TQm-6Z-9zB">
                             <connections>
-                                <segue destination="16O-A2-8gZ" kind="unwind" unwindAction="unwindToToDoListWithSegue:" id="gP0-VQ-SEJ"/>
+                                <segue destination="16O-A2-8gZ" kind="unwind" unwindAction="unwindToToDoListWithSegue:" id="2Ak-H1-DCd"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="orG-KZ-2mf">
                             <connections>
-                                <segue destination="16O-A2-8gZ" kind="unwind" identifier="saveUnwind" unwindAction="unwindToToDoListWithSegue:" id="9N8-ZW-zUF"/>
+                                <segue destination="16O-A2-8gZ" kind="unwind" unwindAction="unwindToToDoListWithSegue:" id="iQ8-IE-EJ8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="dueDateDatePicker" destination="qkc-I4-aEW" id="i7B-IM-djP"/>
+                        <outlet property="dueDateLabel" destination="IXZ-Mv-TKY" id="ys8-fu-AXT"/>
+                        <outlet property="isCompleteButton" destination="J94-CW-8g7" id="vd2-RT-a36"/>
+                        <outlet property="notesTextView" destination="iOA-a0-qxz" id="lan-lC-UF4"/>
+                        <outlet property="saveButton" destination="orG-KZ-2mf" id="yw9-P2-98X"/>
+                        <outlet property="titleTextField" destination="rsa-YL-ysh" id="rQt-JL-pnk"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7eF-Io-6eF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="16O-A2-8gZ" userLabel="Exit" sceneMemberID="exit"/>
