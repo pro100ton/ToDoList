@@ -74,4 +74,10 @@ class ToDoTableViewController: UITableViewController {
         }
     }
     
+    // MARK: Segues
+    /// Unwind method to allow different scenes to navigate back to ToDo list table
+    /// - Parameter segue: Any segue can trigger that action
+    @IBAction func unwindToToDoList(segue: UIStoryboardSegue) {
+        
+    }
 }
