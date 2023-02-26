@@ -9,6 +9,20 @@ import UIKit
 
 class ToDoDetailTableViewController: UITableViewController {
     
+    // MARK: Properties
+    
+    // Value to store if wheel date picker hidden or not
+    var isDatePickerHidden = true
+    
+    // Index path of label of date picker
+    let dateLabelIndexPath = IndexPath(row: 0, section: 1)
+    
+    // Index path of wheel date picker
+    let datePickerIndexPath = IndexPath(row: 1, section: 1)
+    
+    // Index path for notes
+    let notesIndexPath = IndexPath(row: 0, section: 2)
+    
     // MARK: Outlets
     
     @IBOutlet var titleTextField: UITextField!
@@ -34,6 +48,35 @@ class ToDoDetailTableViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
+    /// Перегрузка метода `heightForRowAt` для того, чтобы устанавливать значения высоты для клеток, скрывая
+    /// wheel дейтпикер если он не нужен
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // В зависимости от того, какой `indexPath` у клетки
+        switch indexPath {
+            // Если indexPath совпадает с indexPath дейтпикера и значение переменной показа
+            // дейтпикера говорит что показывать его не надо, то скрыть его
+        case datePickerIndexPath where isDatePickerHidden == true:
+            return 0
+            // В противном случае назначить высоту клетки = 200
+        case notesIndexPath:
+            return 200
+            // Для остальных клеток дать значение автоматическое
+        default:
+            return UITableView.automaticDimension
+        }
+    }
+    
+    /// Перегрузка функции `didSelectRowAt` для отслеживания, когда пользователь нажимает на клетку с лейблом
+    /// даты и времени и переключает переменную `idDatePickerHidden` для скрытия/показа колеса дейтпикера
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath == dateLabelIndexPath {
+            isDatePickerHidden.toggle()
+            updateDueDateLabelText(date: dueDateDatePicker.date)
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
+    }
     /*
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
