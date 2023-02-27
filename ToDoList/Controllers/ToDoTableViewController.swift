@@ -7,7 +7,19 @@
 
 import UIKit
 
-class ToDoTableViewController: UITableViewController {
+/// Расщиряя класс протоколом клетки мы обозначаем, что в роли делегата клетки может выступать данный VC
+class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
+    func checkMarkTapped(sender: ToDoCell) {
+        /// Имплеменатция метода нажатия кнопки клетки. В данном случае код выполнится в момент, когда пользователь
+        /// нажмет на кнопку в клетке с выбором о статусе конкретной ToDo
+        if let indexPath = tableView.indexPath(for: sender) {
+            var toDo = toDos[indexPath.row]
+            toDo.isComplete.toggle()
+            toDos[indexPath.row] = toDo
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
     
     // MARK: Properties
     /// Объявляем переменную, которая будет менеджить список тудушек
@@ -24,7 +36,7 @@ class ToDoTableViewController: UITableViewController {
             self.toDos = ToDo.loadSampleToDos()
         }
         
-        /// Включение "Умного" режима редактирования для таблицы. При его нажатии появляется интерфейс удаления
+        /// Включение "Умного" режима редактирования для таблицы. При его нажатии появляется интерфейс удаленияn
         /// элементов таблицы
         navigationItem.leftBarButtonItem = editButtonItem
     }
@@ -44,6 +56,9 @@ class ToDoTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "ToDoCellIdentifier",
                 for: indexPath) as! ToDoCell
+            
+            // Устанавливаем делегатом клетки данный VC
+            cell.delegate = self
             
             // Достаем текущее значение тудушки в соответствии с номером
             let currentToDo = toDos[indexPath.row]

@@ -38,6 +38,9 @@
                                                         <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="completeButtonTapped:" destination="uuK-Xk-ZyT" eventType="touchUpInside" id="TRl-IP-8rs"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEh-BL-vfP">
                                                     <rect key="frame" x="38" y="0.0" width="335" height="27.666666666666668"/>

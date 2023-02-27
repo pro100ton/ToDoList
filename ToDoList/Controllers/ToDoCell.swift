@@ -7,7 +7,18 @@
 
 import UIKit
 
+/// Протокол с методом для передачи клетки делегату
+protocol ToDoCellDelegate: AnyObject {
+    func checkMarkTapped(sender: ToDoCell)
+}
+
 class ToDoCell: UITableViewCell {
+    
+    // MARK: Properties
+    
+    /// Объявление проперти делегата для того, чтобы клетка имела что-то для информирования (в ншем случае - VC
+    /// главной таблицы)
+    weak var delegate: ToDoCellDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,4 +36,11 @@ class ToDoCell: UITableViewCell {
     @IBOutlet var isCompleteButton: UIButton!
     @IBOutlet var titleLabel: UILabel!
     
+    // MARK: Actions
+    
+    @IBAction func completeButtonTapped(_ sender: UIButton) {
+        /// Внутри экшона по нажатию кнопки информируем делегата о том, что кнопка была нажата (вызываем метод
+        /// протокола)
+        delegate?.checkMarkTapped(sender: self)
+    }
 }
