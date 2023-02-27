@@ -39,20 +39,19 @@ class ToDoTableViewController: UITableViewController {
     override func tableView(
         _ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             // Объявляем объект типа "клетка" для каждой клетки в таблице
+            // Также downcast'им эту клетку до нашего кастомного класса, отвечающего за поведение
+            // клетки
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "ToDoCellIdentifier",
-                for: indexPath)
+                for: indexPath) as! ToDoCell
             
             // Достаем текущее значение тудушки в соответствии с номером
             let currentToDo = toDos[indexPath.row]
             
-            // Производим ее конфигурацию
-            var content = cell.defaultContentConfiguration()
-            content.text = currentToDo.title
-            
-            // Устанавливаем это конфигурацию клетке
-            cell.contentConfiguration = content
-            
+            // Настраиваем клетку согласно нашему кастомному классу для нее
+            cell.titleLabel?.text = currentToDo.title
+            cell.isCompleteButton.isSelected = currentToDo.isComplete
+                       
             // Возвращаем клетку
             return cell
         }

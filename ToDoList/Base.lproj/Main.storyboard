@@ -17,14 +17,47 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDoCellIdentifier" id="uuK-Xk-ZyT">
-                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDoCellIdentifier" id="uuK-Xk-ZyT" customClass="ToDoCell" customModule="ToDoList" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="393" height="47.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uuK-Xk-ZyT" id="O4F-XJ-Ydm">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="47.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="glQ-Zw-KZC">
+                                            <rect key="frame" x="10" y="10.000000000000002" width="373" height="27.666666666666671"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uVz-uu-Dh6">
+                                                    <rect key="frame" x="0.0" y="0.0" width="28" height="27.666666666666668"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="" image="circle" catalog="system">
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                                    </state>
+                                                    <state key="selected">
+                                                        <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                                    </state>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEh-BL-vfP">
+                                                    <rect key="frame" x="38" y="0.0" width="335" height="27.666666666666668"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="glQ-Zw-KZC" firstAttribute="top" secondItem="O4F-XJ-Ydm" secondAttribute="top" constant="10" id="1Vm-14-LZ9"/>
+                                        <constraint firstAttribute="bottom" secondItem="glQ-Zw-KZC" secondAttribute="bottom" constant="10" id="FQi-wh-3MV"/>
+                                        <constraint firstItem="glQ-Zw-KZC" firstAttribute="leading" secondItem="O4F-XJ-Ydm" secondAttribute="leading" constant="10" id="Gg7-Ch-mpa"/>
+                                        <constraint firstAttribute="trailing" secondItem="glQ-Zw-KZC" secondAttribute="trailing" constant="10" id="MW0-3E-hsp"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="isCompleteButton" destination="uVz-uu-Dh6" id="gDW-H1-jxD"/>
+                                    <outlet property="titleLabel" destination="NEh-BL-vfP" id="gcX-A5-WTG"/>
                                     <segue destination="gWU-bZ-Qjl" kind="presentation" id="bIe-Og-YfQ"/>
                                 </connections>
                             </tableViewCell>
