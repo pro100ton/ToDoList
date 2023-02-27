@@ -39,10 +39,25 @@ class ToDoDetailTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Getting the today's date and adding 24 hours to it
-        dueDateDatePicker.date = Date().addingTimeInterval(24*60*60)
+        
+        // Prepearing view depending on user action: Add or edit existing ToDo item
+        let currentDueDate: Date
+        // If VC initialized with toDo item
+        if let toDo = toDo {
+            navigationItem.title = "ToDo"
+            titleTextField.text = toDo.title
+            isCompleteButton.isSelected = toDo.isComplete
+            currentDueDate = toDo.dueDate
+            notesTextView.text = toDo.notes
+        } else {
+            // Else if no toDo was provided during initialization - set the default due date delta
+            // Getting the today's date and adding 24 hours to it
+            currentDueDate = Date().addingTimeInterval(24*60*60)
+        }
+        
+        dueDateDatePicker.date = currentDueDate
+        updateDueDateLabelText(date: currentDueDate)
         updateSaveButtonState()
-        updateDueDateLabelText(date: dueDateDatePicker.date)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -147,9 +162,17 @@ class ToDoDetailTableViewController: UITableViewController {
          let dueDate = dueDateDatePicker.date
          let notes = notesTextView.text
          
-         // If user presses the save button, than set the optional toDo property to ToDo model
-         // instance
-         toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
+         /// If user presses the save button, than set the optional toDo property to ToDo model instance
+         // If we are managing existing toDo item (passed during initializer)
+         if toDo != nil {
+             toDo?.title = title
+             toDo?.isComplete = isComplete
+             toDo?.dueDate = dueDate
+             toDo?.notes = notes
+         } else {
+             // If user taps add button (initilized VC without toDo)
+             toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
+         }
          
      }
     

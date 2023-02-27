@@ -23,7 +23,7 @@ class ToDoTableViewController: UITableViewController {
         } else {
             self.toDos = ToDo.loadSampleToDos()
         }
-       
+        
         /// Включение "Умного" режима редактирования для таблицы. При его нажатии появляется интерфейс удаления
         /// элементов таблицы
         navigationItem.leftBarButtonItem = editButtonItem
@@ -68,11 +68,11 @@ class ToDoTableViewController: UITableViewController {
         _ tableView: UITableView,
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            toDos.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            if editingStyle == .delete {
+                toDos.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
         }
-    }
     
     // MARK: Segues
     /// Unwind method to allow different scenes to navigate back to ToDo list table
@@ -85,13 +85,46 @@ class ToDoTableViewController: UITableViewController {
         
         // If source VC has toDo property initilized
         if let toDo = sourceViewController.toDo {
-            // Calculate new index path for new row in table
-            let newIndexPath = IndexPath(row: toDos.count, section: 0)
-            
-            // Append new object to list of ToDo's
-            toDos.append(toDo)
-            // Insert new row with new object
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
+            /// If editing action is performed (toDo item UUID was initialized with VC) - find the existing toDo item in array
+            /// `firstIndex` returns the occurance of item in array
+            if let indexOfExistingToDo = toDos.firstIndex(of: toDo){
+                // Replace object in current array and replace with edited one
+                toDos[indexOfExistingToDo] = toDo
+                // Reload row at indexPath of edited object
+                tableView.reloadRows(at: [IndexPath(row: indexOfExistingToDo, section: 0)],
+                                     with: .automatic)
+            } else {
+                // Calculate new index path for new row in table
+                let newIndexPath = IndexPath(row: toDos.count, section: 0)
+                // Append new object to list of ToDo's
+                toDos.append(toDo)
+                // Insert new row with new object
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
         }
     }
+    
+    
+    /// Segue action to perform edit and add new todo item management
+    @IBSegueAction func editToDo(_ coder: NSCoder, sender: Any?) -> ToDoDetailTableViewController? {
+        // First setting up VC which we will configure
+        let detailController = ToDoDetailTableViewController(coder: coder)
+        
+        // Next we guard sender and checking if user taps a cell and if it is, grabbing index path
+        // of that cell
+        guard let cell = sender as? UITableViewCell,
+              let indexPath = tableView.indexPath(for: cell) else {
+            // Otherwise if user taps not on a cell - initialize exmpty detail todo VC
+            return detailController
+        }
+        
+        // Deselecting row that user taps
+        tableView.deselectRow(at: indexPath, animated: true)
+        // Initializing optional todo in details VC, that stores current ToDo item
+        detailController?.toDo = toDos[indexPath.row]
+        
+        return detailController
+    }
+    
+    
 }
