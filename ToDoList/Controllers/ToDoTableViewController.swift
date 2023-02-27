@@ -78,6 +78,20 @@ class ToDoTableViewController: UITableViewController {
     /// Unwind method to allow different scenes to navigate back to ToDo list table
     /// - Parameter segue: Any segue can trigger that action
     @IBAction func unwindToToDoList(segue: UIStoryboardSegue) {
+        // Guarding identifier of save button unwind segue from new to do VC
+        guard segue.identifier == "saveUnwind" else { return }
+        // Force unpacking segue source as to do detail VC
+        let sourceViewController = segue.source as! ToDoDetailTableViewController
         
+        // If source VC has toDo property initilized
+        if let toDo = sourceViewController.toDo {
+            // Calculate new index path for new row in table
+            let newIndexPath = IndexPath(row: toDos.count, section: 0)
+            
+            // Append new object to list of ToDo's
+            toDos.append(toDo)
+            // Insert new row with new object
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
     }
 }

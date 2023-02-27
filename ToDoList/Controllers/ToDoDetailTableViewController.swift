@@ -23,6 +23,10 @@ class ToDoDetailTableViewController: UITableViewController {
     // Index path for notes
     let notesIndexPath = IndexPath(row: 0, section: 2)
     
+    // Property for storing ToDo model data
+    // Optional because it will be populated when user presses the "save" button
+    var toDo: ToDo?
+    
     // MARK: Outlets
     
     @IBOutlet var titleTextField: UITextField!
@@ -122,15 +126,32 @@ class ToDoDetailTableViewController: UITableViewController {
      }
      */
     
-    /*
      // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
+    /// Method for prepearing data to send it to another VC's. In our case we prepare data for unwind segue, that binded to the "save"
+    /// button segue
+    /// - Parameters:
+    ///   - segue: any UIStoryBoard segue
+    ///   - sender: Any sender
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
+         super.prepare(for: segue, sender: sender)
+         
+         // Guarding segue identifier to work only with "Save" button segue
+         guard segue.identifier == "saveUnwind" else { return }
+         
+         // Getting all values from the outlets and store them in constants
+         // We force unwrapping text from title because we made it that way, that "Save" button
+         // is only active, when title is not empty, so its save
+         let title = titleTextField.text!
+         let isComplete = isCompleteButton.isSelected
+         let dueDate = dueDateDatePicker.date
+         let notes = notesTextView.text
+         
+         // If user presses the save button, than set the optional toDo property to ToDo model
+         // instance
+         toDo = ToDo(title: title, isComplete: isComplete, dueDate: dueDate, notes: notes)
+         
      }
-     */
     
     // MARK: Helper functions
     /// Helper function to update save button state.
