@@ -7,12 +7,29 @@
 
 import Foundation
 
-struct ToDo: Equatable {
-    let id = UUID()
+struct ToDo: Equatable, Codable {
+    let id: UUID
     var title: String
     var isComplete: Bool
     var dueDate: Date
     var notes: String?
+    
+    /// Статическая константа структуры для хранения входной точки в попку документов приложения
+    static let documentsDirectory = FileManager.default.urls(
+        for: .documentDirectory, in: .userDomainMask).first!
+    
+    /// Путь до файла, в котором будут храниться данные ToDo list'a
+    static let archiveURL = documentsDirectory.appending(path: "toDos.plist")
+    
+    /// Задаем инициализатор для того, чтобы избавиться от ошибки протокола `Codable` с предустановленным значением
+    /// `let id = UUID()` -> `let id: UUID` и присваиваем `id` в самом инициализаторе
+    init(title: String, isComplete: Bool, dueDate: Date, notes: String?) {
+        self.id = UUID()
+        self.title = title
+        self.isComplete = isComplete
+        self.dueDate = dueDate
+        self.notes = notes
+    }
     
     
     /// Редекларация метода протокола `==` для того, чтобы обозначить что тудушки равны
@@ -25,11 +42,27 @@ struct ToDo: Equatable {
         return lhs.id == rhs.id
     }
     
-    // TODO: Добавить имплементацию метода загрузки тудушек
     /// Статический метод для загрузки тудушек
     /// - Returns: пока ничего, позже добавлю имплементацию
     static func loadToDos() -> [ToDo]? {
-        return nil
+        // Пробуем достать данные из файла, в которых хранятся ToDo'шки
+        guard let codedToDos = try? Data(contentsOf: archiveURL) else { return nil }
+        // Объявляем класс декодер того, что лежит внутри распакованного документа, если он
+        // присутствует
+        let propertyListEncoder = PropertyListDecoder()
+        // Попытка декодировать информацию из файла
+        return try? propertyListEncoder.decode(Array<ToDo>.self, from: codedToDos)
+    }
+    
+    /// Статический метод для записи тудушек в файл
+    /// - Parameter toDos: список тудушек для записи
+    static func saveToDos(_ toDos: [ToDo]) {
+        // Объявляем экземпляр класса encoder'a
+        let propertyListEncoder = PropertyListEncoder()
+        // Пытаемся закодирвать наш список
+        let codedToDos = try? propertyListEncoder.encode(toDos)
+        // Попытка записать наш закодированный список в файл
+        try? codedToDos?.write(to: archiveURL, options: .noFileProtection)
     }
     
     /// Static method for generation dummy data with list of ToDo's as started point of an app

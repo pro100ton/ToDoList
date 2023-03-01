@@ -17,6 +17,8 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
             toDo.isComplete.toggle()
             toDos[indexPath.row] = toDo
             tableView.reloadRows(at: [indexPath], with: .automatic)
+            // Вызываем метод записи в файл списка тудушек
+            ToDo.saveToDos(toDos)
         }
     }
     
@@ -85,6 +87,8 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
             if editingStyle == .delete {
                 toDos.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
+                // Вызываем метод записи в файл списка тудушек
+                ToDo.saveToDos(toDos)
             }
         }
     
@@ -116,6 +120,8 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
         }
+        // Вызываем метод записи в файл списка тудушек
+        ToDo.saveToDos(toDos)
     }
     
     
